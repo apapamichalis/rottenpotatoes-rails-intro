@@ -13,9 +13,9 @@ class MoviesController < ApplicationController
   def index
     sorting_parameters = params[:sort] || session[:sort]
     @all_ratings = possible_ratings
-    @ratings_selected = params[:ratings] || session[:ratings] || {}
+    @ratings_selected = params[:ratings] || session[:ratings] || Hash.empty
     if @ratings_selected == {}
-      @selected_ratings = Hash[@all_ratings.each {|x| [x,x]}]
+      @selected_ratings = Hash[@all_ratings.collect {|x| [x,x]}]
     end
     
     if params[:sort] != session[:sort]
@@ -31,12 +31,6 @@ class MoviesController < ApplicationController
       redirect_to :sort => sorting_parameters, :ratings => @ratings_selected and return
     end
     
-    
-    
-    
-    
-    
-    #@ratings_selected = params[:ratings].present? ? params[:ratings] : possible_ratings #mine
     if params[:ratings].present?
       @movies = Movie.where(rating: @ratings_selected.keys).order(sorting_parameters)
     else
