@@ -16,7 +16,7 @@ class MoviesController < ApplicationController
     @all_ratings = possible_ratings
     @ratings_selected = params[:ratings] || session[:ratings] || {}
     if @ratings_selected == {}
-      @selected_ratings = Hash[@all_ratings.collect {|x| [x,x]}]
+      @ratings_selected = Hash[@all_ratings.collect {|x| [x,x]}]
     end
     
     if params[:sort] != session[:sort]
