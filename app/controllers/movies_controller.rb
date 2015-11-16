@@ -12,16 +12,14 @@ class MoviesController < ApplicationController
 
   def index
     @all_ratings = possible_ratings
-    #@ratings = params[:ratings].keys
+    @ratings_selected = params[:ratings].present? ? params[:ratings].keys : possible_ratings
     if params[:ratings].present?
-      @movies = Movie.where(rating: params[:ratings].keys).order(params[:sort])
+      @movies = Movie.where(rating: @ratings_selected).order(params[:sort])
     else
       @movies = Movie.order(params[:sort])
     end
     
   end
-  
-  
   
   def possible_ratings
     ['G','PG','PG-13','R']
