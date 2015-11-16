@@ -13,10 +13,10 @@ class MoviesController < ApplicationController
 
   def index
     sorting_parameters = params[:sort] || session[:sort]
-    @all_ratings = possible_ratings
+    @all_ratings = Hash[possible_ratings.map {|x| [x,x]}]
     @ratings_selected = params[:ratings] || session[:ratings] || {}
     if @ratings_selected == {}
-      @selected_ratings = Hash[@all_ratings.collect {|x| [x,x]}]
+      @selected_ratings = @all_ratings
     end
     
     if params[:sort] != session[:sort]
